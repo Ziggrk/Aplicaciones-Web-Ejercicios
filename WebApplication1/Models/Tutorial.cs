@@ -4,10 +4,10 @@ public class Tutorial
 {
     public int Id { get; set; }
     public string title { get; set; }
-    public string year { get; set; }
+    public int year { get; set; }
     public string Description { get; set; }
 
-    public Tutorial(int id, string title, string year, string description)
+    public Tutorial(int id, string title, int year, string description)
     {
         this.Id = id;
         this.title = title;
