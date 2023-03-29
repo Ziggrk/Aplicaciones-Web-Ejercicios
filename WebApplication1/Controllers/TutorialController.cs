@@ -68,12 +68,20 @@ namespace WebApplication1.Controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] Tutorial tutorial)
         {
+            int indexSearched = _tutorials.FindIndex( x => x.Id == id);
+            if (indexSearched != -1)
+                _tutorials[indexSearched] = tutorial;
+            else return;
         }
 
         // DELETE: api/Tutorial/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            int indexSearched = _tutorials.FindIndex( x => x.Id == id);
+            if (indexSearched != -1)
+                _tutorials.RemoveAt(indexSearched);
+            else return;
         }
     }
 }

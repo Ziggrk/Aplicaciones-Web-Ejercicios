@@ -63,14 +63,20 @@ namespace WebApplication1.Controllers
 
         // PUT: api/Category/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Put(int id, [FromBody] Category category)
         {
+            int indexSearched = _categories.FindIndex( x => x.Id == id);
+            _categories[indexSearched] = category;
         }
 
         // DELETE: api/Category/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            int indexSearched = _categories.FindIndex( x => x.Id == id);
+            if (indexSearched != -1)
+                _categories.RemoveAt(indexSearched);
+            else return;
         }
     }
 }
