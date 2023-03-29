@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
@@ -11,24 +12,53 @@ namespace WebApplication1.Controllers
     [ApiController]
     public class CategoryController : ControllerBase
     {
-        // GET: api/Category
-        [HttpGet]
-        public IEnumerable<string> Get()
+
+        private List<Category> _categories = new List<Category>
         {
-            return new string[] { "value1", "value2" };
+            new Category(1, "Matematica", 1, "Matematica para universitarios"),
+            new Category(2, "Lenguaje", 1, "Producción de textos academicos")
+        };
+        
+        // GET: api/Category
+        [HttpGet(Name = "GetCategory")]
+        public IEnumerable<Category> Get()
+        {
+            return _categories;
         }
 
         // GET: api/Category/5
         [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        public Category Get(int id)
         {
-            return "value";
+            Category? selectedCategory = null;
+            foreach (var category in _categories)
+            {
+                if (category.Id == id) 
+                    selectedCategory = category;
+            }
+                        
+            return selectedCategory;
         }
 
         // POST: api/Category
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] Category category)
         {
+            bool isIdUnique = true;
+            foreach (var categories_item in _categories)
+            {
+                if (category.Id == categories_item.Id)
+                    isIdUnique = false;
+            }
+
+            if (isIdUnique)
+            {
+                return StatusCode(201);
+            }
+            else
+            {
+                return StatusCode(500);
+            }
         }
 
         // PUT: api/Category/5
