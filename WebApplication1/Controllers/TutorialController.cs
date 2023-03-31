@@ -1,4 +1,4 @@
-using System;
+    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -31,15 +31,7 @@ namespace WebApplication1.Controllers
         [HttpGet("{id}", Name = "Getx")]
         public Tutorial Get(int id)
         {
-            Tutorial? selectedTutorial = null;
-            
-            foreach (var tutorial in _tutorials)
-            {
-                if (tutorial.Id == id)
-                    selectedTutorial = tutorial;
-            }
-            
-            return selectedTutorial;
+            return _tutorials.Find(tutorial => tutorial.Id == id);
         }
 
         // POST: api/Tutorial
@@ -55,11 +47,12 @@ namespace WebApplication1.Controllers
 
             if (isIdUnique)
             {
+                _tutorials.Add(tutorial);
                 return StatusCode(201);
             }
             else
             {
-                return StatusCode(500);
+                return StatusCode(400);
             }
 
         }

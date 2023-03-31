@@ -30,14 +30,7 @@ namespace WebApplication1.Controllers
         [HttpGet("{id}", Name = "Get")]
         public Category Get(int id)
         {
-            Category? selectedCategory = null;
-            foreach (var category in _categories)
-            {
-                if (category.Id == id) 
-                    selectedCategory = category;
-            }
-                        
-            return selectedCategory;
+            return _categories.Find(category => category.Id == id) ;
         }
 
         // POST: api/Category
@@ -53,11 +46,12 @@ namespace WebApplication1.Controllers
 
             if (isIdUnique)
             {
+                _categories.Add(category);
                 return StatusCode(201);
             }
             else
             {
-                return StatusCode(500);
+                return StatusCode(400);
             }
         }
 
@@ -65,7 +59,7 @@ namespace WebApplication1.Controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] Category category)
         {
-            int indexSearched = _categories.FindIndex( x => x.Id == id);
+            int indexSearched = _categories.FindIndex( itemCategory => itemCategory.Id == id);
             _categories[indexSearched] = category;
         }
 
