@@ -14,7 +14,7 @@ namespace WebApplication1.Controllers
     {
         
         
-        private List<Tutorial> _tutorials = new List<Tutorial>
+        private List<Tutorial?> _tutorials = new List<Tutorial?>
         {
             new Tutorial(1, "Aprende integrales en 5 minutos", 2020, "Integrales desde 0", new Category(1,"Matematica",1,"Matematica para universitarios")),
             new Tutorial(2, "Conectores logicos para textos academicos", 2019, "Proximamente",new Category(2,"Lenguaje",1,"Producción de textos academicos"))
@@ -22,44 +22,53 @@ namespace WebApplication1.Controllers
         
         // GET: api/Tutorial
         [HttpGet(Name = "GetTutorial")]
-        public IEnumerable<Tutorial> Get()
+        public IEnumerable<Tutorial?> Get()
         {
             return _tutorials;
         }
 
         // GET: api/Tutorial/5
         [HttpGet("{id}", Name = "Getx")]
-        public Tutorial Get(int id)
+        public Tutorial? Get(int id)
         {
-            return _tutorials.Find(tutorial => tutorial.Id == id);
+            return _tutorials.Find(tutorial => tutorial != null && tutorial.Id == id);
         }
 
         // POST: api/Tutorial
         [HttpPost]
-        public IActionResult Post([FromBody] Tutorial tutorial)
+        public IActionResult Post([FromBody] Tutorial? tutorial)
         {
-            bool isIdUnique = true;
-            foreach (var tutorials_item in _tutorials)
+            try
             {
-                if (tutorial.Id == tutorials_item.Id)
-                    isIdUnique = false;
+                bool isIdUnique = true;
+                foreach (var tutorialsItem in _tutorials)
+                {
+                    if (tutorial.Id == tutorialsItem.Id)
+                        isIdUnique = false;
+                }
+                
+                //throw new Exception("Error en el servidor.");
+                
+                if (isIdUnique)
+                {
+                    _tutorials.Add(tutorial);
+                    return StatusCode(201);
+                }
+                else
+                {
+                    return StatusCode(400);
+                }
             }
-
-            if (isIdUnique)
+            catch (Exception a)
             {
-                _tutorials.Add(tutorial);
-                return StatusCode(201);
-            }
-            else
-            {
-                return StatusCode(400);
+                return StatusCode(500);
             }
 
         }
 
         // PUT: api/Tutorial/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Tutorial tutorial)
+        public void Put(int id, [FromBody] Tutorial? tutorial)
         {
             int indexSearched = _tutorials.FindIndex( x => x.Id == id);
             if (indexSearched != -1)

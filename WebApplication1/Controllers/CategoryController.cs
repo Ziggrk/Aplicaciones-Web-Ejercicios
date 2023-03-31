@@ -13,7 +13,7 @@ namespace WebApplication1.Controllers
     public class CategoryController : ControllerBase
     {
 
-        private List<Category> _categories = new List<Category>
+        private List<Category?> _categories = new List<Category?>
         {
             new Category(1, "Matematica", 1, "Matematica para universitarios"),
             new Category(2, "Lenguaje", 1, "Producción de textos academicos")
@@ -21,43 +21,52 @@ namespace WebApplication1.Controllers
         
         // GET: api/Category
         [HttpGet(Name = "GetCategory")]
-        public IEnumerable<Category> Get()
+        public IEnumerable<Category?> Get()
         {
             return _categories;
         }
 
         // GET: api/Category/5
         [HttpGet("{id}", Name = "Get")]
-        public Category Get(int id)
+        public Category? Get(int id)
         {
-            return _categories.Find(category => category.Id == id) ;
+            return _categories.Find(category => category != null && category.Id == id);
         }
 
         // POST: api/Category
         [HttpPost]
-        public IActionResult Post([FromBody] Category category)
+        public IActionResult Post([FromBody] Category? category)
         {
-            bool isIdUnique = true;
-            foreach (var categories_item in _categories)
+            try
             {
-                if (category.Id == categories_item.Id)
-                    isIdUnique = false;
-            }
+                bool isIdUnique = true;
+                foreach (var categories_item in _categories)
+                {
+                    if (category.Id == categories_item.Id)
+                        isIdUnique = false;
+                }
+                
+                //throw new Exception("Error en el servidor.");
 
-            if (isIdUnique)
-            {
-                _categories.Add(category);
-                return StatusCode(201);
+                if (isIdUnique)
+                {
+                    _categories.Add(category);
+                    return StatusCode(201);
+                }
+                else
+                {
+                    return StatusCode(400);
+                }
             }
-            else
+            catch (Exception e)
             {
-                return StatusCode(400);
+                return StatusCode(500);
             }
         }
 
         // PUT: api/Category/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Category category)
+        public void Put(int id, [FromBody] Category? category)
         {
             int indexSearched = _categories.FindIndex( itemCategory => itemCategory.Id == id);
             _categories[indexSearched] = category;
