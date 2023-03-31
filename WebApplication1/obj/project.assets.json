@@ -9517,19 +9517,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Trillizos\\.nuget\\packages\\": {}
+    "C:\\Users\\willi\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Trillizos\\RiderProjects\\Aplicaciones-Web-Ejercicios\\WebApplication1\\WebApplication1.csproj",
+      "projectUniqueName": "C:\\Users\\willi\\RiderProjects\\WebApplication1\\WebApplication1\\WebApplication1.csproj",
       "projectName": "WebApplication1",
-      "projectPath": "C:\\Users\\Trillizos\\RiderProjects\\Aplicaciones-Web-Ejercicios\\WebApplication1\\WebApplication1.csproj",
-      "packagesPath": "C:\\Users\\Trillizos\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Trillizos\\RiderProjects\\Aplicaciones-Web-Ejercicios\\WebApplication1\\obj\\",
+      "projectPath": "C:\\Users\\willi\\RiderProjects\\WebApplication1\\WebApplication1\\WebApplication1.csproj",
+      "packagesPath": "C:\\Users\\willi\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\willi\\RiderProjects\\WebApplication1\\WebApplication1\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Trillizos\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\willi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -9587,7 +9592,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
       }
     }
   }

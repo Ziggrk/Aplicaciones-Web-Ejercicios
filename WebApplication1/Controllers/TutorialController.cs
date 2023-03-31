@@ -12,14 +12,15 @@ namespace WebApplication1.Controllers
     [ApiController]
     public class TutorialController : ControllerBase
     {
-        
-        
+
         private List<Tutorial> _tutorials = new List<Tutorial>
         {
-            new Tutorial(1, "Aprende integrales en 5 minutos", 2020, "Integrales desde 0", new Category(1,"Matematica",1,"Matematica para universitarios")),
-            new Tutorial(2, "Conectores logicos para textos academicos", 2019, "Proximamente",new Category(2,"Lenguaje",1,"Producción de textos academicos"))
+            new Tutorial(1, "Aprende integrales en 5 minutos", 2020, "Integrales desde 0",
+                new Category(1, "Matematica", 1, "Matematica para universitarios")),
+            new Tutorial(2, "Conectores logicos para textos academicos", 2019, "Proximamente",
+                new Category(2, "Lenguaje", 1, "Producción de textos academicos"))
         };
-        
+
         // GET: api/Tutorial
         [HttpGet(Name = "GetTutorial")]
         public IEnumerable<Tutorial> Get()
@@ -32,13 +33,13 @@ namespace WebApplication1.Controllers
         public Tutorial Get(int id)
         {
             Tutorial? selectedTutorial = null;
-            
+
             foreach (var tutorial in _tutorials)
             {
                 if (tutorial.Id == id)
                     selectedTutorial = tutorial;
             }
-            
+
             return selectedTutorial;
         }
 
@@ -46,25 +47,36 @@ namespace WebApplication1.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] Tutorial tutorial)
         {
-            bool isIdUnique = true;
-            foreach (var tutorials_item in _tutorials)
+            try
             {
-                if (tutorial.Id == tutorials_item.Id)
-                    isIdUnique = false;
-            }
+                bool isIdUnique = true;
+                foreach (var tutorials_item in _tutorials)
+                {
+                    if (tutorial.Id == tutorials_item.Id)
+                        isIdUnique = false;
+                }
 
-            if (isIdUnique)
-            {
-                return StatusCode(201);
+                //throw new Exception("Error del servidor");
+                
+               
+                if (isIdUnique)
+                {
+                    return StatusCode(201);
+                }
+                else
+                {
+                    return StatusCode(400);
+                }
             }
-            else
+            catch (Exception a)
             {
                 return StatusCode(500);
             }
-
         }
+    
+    
 
-        // PUT: api/Tutorial/5
+    // PUT: api/Tutorial/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] Tutorial tutorial)
         {
